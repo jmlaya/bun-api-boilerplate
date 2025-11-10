@@ -1,0 +1,32 @@
+{
+  "name": "My Bun API",
+  "build": { "dockerfile": "Dockerfile" },
+  "runArgs": [
+    "--name", "my-bun-api",
+    "--network", "local-services_default",
+    "--label", "com.docker.compose.project=devcontainers"
+  ],
+  "shutdownAction": "stopContainer",
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+    "source=claude_data_my-bun-api,target=/root/.claude,type=volume",
+    "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oven.bun-vscode",
+        "rvest.vs-code-prettier-eslint",
+        "esbenp.prettier-vscode",
+        "christian-kohler.path-intellisense",
+        "christian-kohler.npm-intellisense",
+        "steoates.autoimport",
+        "mikestead.dotenv",
+        "amatiasq.sort-imports",
+        "maattdd.gitless",
+        "qufiwefefwoyn.inline-sql-syntax",
+        "humao.rest-client"
+      ]
+    }
+  }
+}
