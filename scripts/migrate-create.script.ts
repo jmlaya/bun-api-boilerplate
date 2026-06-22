@@ -1,4 +1,6 @@
 import { parseArgs } from 'util';
+import { resolve } from 'node:path';
+import { loadConfig } from '../core/helpers/loadConfig';
 
 const {
   values: { name },
@@ -38,9 +40,11 @@ const content = `-- up
 -- DROP TABLE... ALTER TABLE... etc
 `;
 
-await Bun.$`mkdir -p migrations`;
+const config = await loadConfig();
+const migrationsPath = resolve(process.cwd(), config.database!.migrationsPath!);
+await Bun.$`mkdir -p ${migrationsPath}`;
 
-const filePath = `database/migrations/${fileName}`;
+const filePath = `${migrationsPath}/${fileName}`;
 await Bun.write(filePath, content);
 
 console.log(`✅ Nueva migración creada en: ${filePath}`);

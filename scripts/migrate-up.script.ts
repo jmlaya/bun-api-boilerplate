@@ -1,21 +1,7 @@
 import { initializeDatabase, sql } from '../core/database';
+import { loadConfig } from '../core/helpers/loadConfig';
 import { log } from '../core/log';
-
-async function loadConfig() {
-  let config: { database?: { migrationsPath?: string } } = {};
-
-  try {
-    config = JSON.parse(await Bun.file('gazelle.json').text());
-
-    if (!config.database?.migrationsPath) {
-      throw new Error('Migrations path not defined in gazelle.json');
-    }
-  } catch (error) {
-    console.error('Error loading gazelle.json:', error);
-    process.exit(1);
-  }
-  return config;
-}
+import { resolve } from 'node:path';
 
 export async function migrateUp() {
   const config = await loadConfig();
@@ -29,10 +15,9 @@ export async function migrateUp() {
   `;
 
   const glob = new Bun.Glob('*.sql');
-  const migrationsPath = new URL(
-    process.cwd() + '/' + (config.database?.migrationsPath || '../database/migrations'),
-    import.meta.url,
-  ).pathname;
+  const migrationsPath = resolve(process.cwd(), config.database!.migrationsPath!);
+  await Bun.$`mkdir -p ${migrationsPath}`;
+
   const executed = await sql<{ name: string }[]>`
     SELECT name FROM _migrations
   `.then((res) => new Set(res.map((row) => row.name)));

@@ -1,8 +1,18 @@
 import { initializeDatabase, sql } from '../core/database';
+import { loadConfig } from '../core/helpers/loadConfig';
 import { log } from '../core/log';
+import { resolve } from 'node:path';
 
-async function migrateDown() {
+export async function migrateDown() {
+  const config = await loadConfig();
   await initializeDatabase();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS _migrations (
+      name VARCHAR(255) PRIMARY KEY,
+      executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
 
   const last = await sql`
     SELECT name FROM _migrations 
@@ -15,7 +25,10 @@ async function migrateDown() {
     return;
   }
 
-  const content = await Bun.file(`database/migrations/${last}`).text();
+  const migrationsPath = resolve(process.cwd(), config.database!.migrationsPath!);
+  await Bun.$`mkdir -p ${migrationsPath}`;
+
+  const content = await Bun.file(`${migrationsPath}/${last}`).text();
   const [, down] = content.split('-- down');
 
   try {
@@ -29,8 +42,9 @@ async function migrateDown() {
     log.ERROR(`❌ Error reverting ${last}:`, error);
     process.exit(1);
   }
-
-  await sql.end();
 }
 
-migrateDown();
+if (import.meta.main) {
+  await migrateDown();
+  await sql.end();
+}

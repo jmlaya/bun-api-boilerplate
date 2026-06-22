@@ -3,6 +3,7 @@ import { logger } from 'hono/logger';
 import { initializeRouter } from '../app/router';
 import { initializeDatabase } from './database';
 import { appFactory } from './helpers/appFactory';
+import { errorHandler } from './helpers/errorHandler';
 import { log } from './log';
 import { keepAlive } from './middlewares/keepAlive';
 import { ServerOptions } from './types';
@@ -27,6 +28,8 @@ export async function sivro(options?: ServerOptions) {
   });
 
   const router = initializeRouter(app);
+
+  app.onError(errorHandler);
 
   return { app, router };
 }
