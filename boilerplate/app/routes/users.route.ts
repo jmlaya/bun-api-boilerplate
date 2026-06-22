@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { auth, jsonResponse, jsonValidator } from '@sivro/core';
-import type { AppEnv, UsersService } from '@sivro/core';
+import { auth, jsonResponse, jsonValidator } from '@talon/core';
+import type { AppEnv, UsersService } from '@talon/core';
 import { z } from 'zod';
 
 export const usersRouter = new Hono<AppEnv>()

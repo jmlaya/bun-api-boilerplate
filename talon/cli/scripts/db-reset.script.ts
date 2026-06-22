@@ -1,4 +1,4 @@
-import { loadBaseConfig, initializeDatabase, log } from '@sivro/core';
+import { loadBaseConfig, initializeDatabase, log } from '@talon/core';
 import { dbSeed } from './db-seed.script';
 import { migrateUp } from './migrate-up.script';
 

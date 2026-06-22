@@ -1,8 +1,8 @@
-import { sivro } from '@sivro/core';
+import { talon } from '@talon/core';
 import { config } from './config';
 import { initializeRouter } from './router';
 
-const { app, router } = await sivro({
+const { app, router } = await talon({
   database: config.database,
   general: {
     corsOrigins: Array.isArray(config.general.corsOrigins) ? config.general.corsOrigins : [config.general.corsOrigins],

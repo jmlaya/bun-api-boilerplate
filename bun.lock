@@ -8,8 +8,8 @@
     "boilerplate": {
       "name": "boilerplate",
       "dependencies": {
-        "@sivro/cli": "workspace:*",
-        "@sivro/core": "workspace:*",
+        "@talon/cli": "workspace:*",
+        "@talon/core": "workspace:*",
         "hono": "4.10.4",
         "zod": "4.1.12",
       },
@@ -17,17 +17,20 @@
         "@types/bun": "latest",
       },
     },
-    "sivro/cli": {
-      "name": "@sivro/cli",
+    "talon/cli": {
+      "name": "@talon/cli",
+      "bin": {
+        "talon": "./cli.ts",
+      },
       "dependencies": {
-        "@sivro/core": "workspace:*",
+        "@talon/core": "workspace:*",
       },
       "devDependencies": {
         "@types/bun": "latest",
       },
     },
-    "sivro/core": {
-      "name": "@sivro/core",
+    "talon/core": {
+      "name": "@talon/core",
       "dependencies": {
         "@hono/zod-validator": "0.7.4",
         "hono": "4.10.4",
@@ -41,9 +44,9 @@
   "packages": {
     "@hono/zod-validator": ["@hono/zod-validator@0.7.4", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q=="],
 
-    "@sivro/cli": ["@sivro/cli@workspace:sivro/cli"],
+    "@talon/cli": ["@talon/cli@workspace:talon/cli"],
 
-    "@sivro/core": ["@sivro/core@workspace:sivro/core"],
+    "@talon/core": ["@talon/core@workspace:talon/core"],
 
     "@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
 

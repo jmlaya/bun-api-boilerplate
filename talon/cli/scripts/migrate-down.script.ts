@@ -1,4 +1,4 @@
-import { initializeDatabase, getAbsolutePath, loadBaseConfig, log } from '@sivro/core';
+import { initializeDatabase, getAbsolutePath, loadBaseConfig, log } from '@talon/core';
 
 export async function migrateDown() {
   const config = await loadBaseConfig();

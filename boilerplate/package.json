@@ -3,17 +3,17 @@
   "private": true,
   "scripts": {
     "dev": "bun run --hot app/server.ts",
-    "db:reset": "bun node_modules/@sivro/cli/scripts/db-reset.script.ts",
-    "db:seed": "bun node_modules/@sivro/cli/scripts/db-seed.script.ts",
-    "migrations:up": "bun node_modules/@sivro/cli/scripts/migrate-up.script.ts",
-    "migrations:down": "bun node_modules/@sivro/cli/scripts/migrate-down.script.ts",
-    "migrations:create": "bun node_modules/@sivro/cli/scripts/migrate-create.script.ts"
+    "db:reset": "bun node_modules/@talon/cli/scripts/db-reset.script.ts",
+    "db:seed": "bun node_modules/@talon/cli/scripts/db-seed.script.ts",
+    "migrations:up": "bun node_modules/@talon/cli/scripts/migrate-up.script.ts",
+    "migrations:down": "bun node_modules/@talon/cli/scripts/migrate-down.script.ts",
+    "migrations:create": "bun node_modules/@talon/cli/scripts/migrate-create.script.ts"
   },
   "dependencies": {
     "hono": "4.10.4",
     "zod": "4.1.12",
-    "@sivro/core": "workspace:*",
-    "@sivro/cli": "workspace:*"
+    "@talon/core": "workspace:*",
+    "@talon/cli": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "latest"

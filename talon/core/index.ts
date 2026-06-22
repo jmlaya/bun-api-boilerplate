@@ -1,5 +1,5 @@
 export * from './types';
-export { sivro } from './sivro';
+export { talon } from './talon';
 export { initializeDatabase } from './database';
 export { getAbsolutePath } from './helpers/getAbsolutePath';
 export { loadBaseConfig } from './helpers/loadBaseConfig';

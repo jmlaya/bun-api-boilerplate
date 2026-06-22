@@ -1,0 +1,21 @@
+{
+  "name": "@talon/cli",
+  "module": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "bin": {
+    "talon": "./cli.ts"
+  },
+  "scripts": {
+    "cli": "bun cli.ts",
+    "check": "bun --check cli.ts"
+  },
+  "dependencies": {
+    "@talon/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

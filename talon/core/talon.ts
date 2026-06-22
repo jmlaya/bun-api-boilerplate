@@ -13,7 +13,7 @@ import { GeneralAppOptions } from './types';
 
 const baseConfig = await loadBaseConfig();
 
-export async function sivro(_options?: GeneralAppOptions) {
+export async function talon(_options?: GeneralAppOptions) {
   // Initialize the database connection
   const options = deepMerge(baseConfig, _options || {});
   const sql = await initializeDatabase(options.database!);

@@ -1,5 +1,5 @@
 import { parseArgs } from 'util';
-import { getAbsolutePath, loadBaseConfig } from '@sivro/core';
+import { getAbsolutePath, loadBaseConfig } from '@talon/core';
 
 const {
   values: { name },

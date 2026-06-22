@@ -1,6 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { argv } from 'node:process';
-import { initializeDatabase, getAbsolutePath, loadBaseConfig, log } from '@sivro/core';
+import { initializeDatabase, getAbsolutePath, loadBaseConfig, log } from '@talon/core';
 
 export async function dbSeed() {
   const config = await loadBaseConfig();

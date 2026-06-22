@@ -1,4 +1,4 @@
-import { UsersService } from '@sivro/core';
+import { UsersService } from '@talon/core';
 
 export class AppUsersService extends UsersService {
   public testMethod() {

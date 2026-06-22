@@ -31,13 +31,13 @@ function interpolateEnvValues(value: unknown): unknown {
 
 export async function loadBaseConfig() {
   let config: GeneralAppOptions = {};
-  const path = 'sivro.json';
+  const path = 'talon.json';
 
   if (await Bun.file(path).exists()) {
     try {
       config = interpolateEnvValues(JSON.parse(await Bun.file(path).text())) as GeneralAppOptions;
     } catch (error) {
-      log.ERROR('Error loading sivro.json:', error);
+      log.ERROR('Error loading talon.json:', error);
       process.exit(1);
     }
 
