@@ -8,7 +8,9 @@
     "boilerplate": {
       "name": "boilerplate",
       "dependencies": {
+        "hono": "^4.10.4",
         "sivro": "workspace:*",
+        "zod": "^4.1.12",
       },
       "devDependencies": {
         "@types/bun": "latest",

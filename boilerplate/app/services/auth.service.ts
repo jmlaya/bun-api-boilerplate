@@ -1,5 +1,7 @@
-import { Service, log, sign, timeToSeconds, verify } from 'sivro';
-import type { JWTPayload, TokenPayload } from 'sivro';
+import { sign, verify } from 'hono/jwt';
+import type { JWTPayload } from 'hono/utils/jwt/types';
+import { Service, log, timeToSeconds } from 'sivro';
+import type { TokenPayload } from 'sivro';
 import { config } from '../config';
 import type { UsersService } from './users.service';
 

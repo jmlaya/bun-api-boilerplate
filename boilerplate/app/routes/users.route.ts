@@ -1,4 +1,6 @@
-import { Hono, auth, jsonResponse, jsonValidator, z } from 'sivro';
+import { Hono } from 'hono';
+import { z } from 'zod';
+import { auth, jsonResponse, jsonValidator } from 'sivro';
 import type { AppEnv } from 'sivro';
 import type { UsersService } from '../services/users.service';
 

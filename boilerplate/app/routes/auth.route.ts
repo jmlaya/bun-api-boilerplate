@@ -1,4 +1,6 @@
-import { BadRequestException, Hono, UnauthorizedException, jsonResponse, jsonValidator, log, z } from 'sivro';
+import { Hono } from 'hono';
+import { z } from 'zod';
+import { BadRequestException, UnauthorizedException, jsonResponse, jsonValidator, log } from 'sivro';
 import type { AppEnv } from 'sivro';
 import type { AuthService } from '../services/auth.service';
 

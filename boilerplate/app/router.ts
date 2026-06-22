@@ -1,4 +1,4 @@
-import { Hono } from 'sivro';
+import { Hono } from 'hono';
 import type { AppEnv } from 'sivro';
 import { authRouter } from './routes/auth.route';
 import { usersRouter } from './routes/users.route';
