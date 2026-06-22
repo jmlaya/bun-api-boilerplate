@@ -1,4 +1,4 @@
-import { sivro } from '../core/sivro';
+import { sivro } from '../core';
 import { config } from './config';
 
 const { app, router } = await sivro({ database: config.database });

@@ -1,9 +1,7 @@
 import { sign, verify } from 'hono/jwt';
 import type { JWTPayload } from 'hono/utils/jwt/types';
-import { timeToSeconds } from '../../core/helpers/timeToSeconds';
-import { Service } from '../../core/lib/service.class';
-import { log } from '../../core/log';
-import type { TokenPayload } from '../../core/types';
+import { Service, log, timeToSeconds } from '../../core';
+import type { TokenPayload } from '../../core';
 import { config } from '../config';
 import type { UsersService } from './users.service';
 

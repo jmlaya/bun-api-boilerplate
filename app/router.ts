@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import type { AppEnv } from '../core/types';
+import type { AppEnv } from '../core';
 import { authRouter } from './routes/auth.route';
 import { usersRouter } from './routes/users.route';
 

@@ -1,4 +1,4 @@
-import { generateRandomText } from '../../core/helpers/generateRandomText';
+import { generateRandomText } from '../../core';
 import { Service } from '../../core/lib/service.class';
 import type { AuthService } from './auth.service';
 
