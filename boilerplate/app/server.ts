@@ -1,4 +1,4 @@
-import { sivro } from 'sivro';
+import { sivro } from '@sivro/core';
 import { config } from './config';
 import { initializeRouter } from './router';
 

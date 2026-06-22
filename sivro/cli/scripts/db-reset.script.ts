@@ -1,6 +1,4 @@
-import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
-import { initializeDatabase } from '../../core/database';
-import { log } from '../../core/log';
+import { loadBaseConfig, initializeDatabase, log } from '@sivro/core';
 import { dbSeed } from './db-seed.script';
 import { migrateUp } from './migrate-up.script';
 

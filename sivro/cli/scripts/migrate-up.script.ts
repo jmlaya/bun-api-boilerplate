@@ -1,7 +1,4 @@
-import { initializeDatabase } from '../../core/database';
-import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
-import { log } from '../../core/log';
+import { initializeDatabase, getAbsolutePath, loadBaseConfig, log } from '@sivro/core';
 
 export async function migrateUp() {
   const config = await loadBaseConfig();

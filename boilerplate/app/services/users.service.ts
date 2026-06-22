@@ -1,4 +1,4 @@
-import { UsersService } from 'sivro';
+import { UsersService } from '@sivro/core';
 
 export class AppUsersService extends UsersService {
   public testMethod() {

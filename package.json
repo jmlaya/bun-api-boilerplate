@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": [
     "boilerplate",
-    "sivro"
+    "sivro/*"
   ],
   "scripts": {
     "dev": "bun --cwd boilerplate run dev",

@@ -1,6 +1,5 @@
 import { parseArgs } from 'util';
-import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
+import { getAbsolutePath, loadBaseConfig } from '@sivro/core';
 
 const {
   values: { name },

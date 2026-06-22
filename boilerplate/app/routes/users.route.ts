@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { auth, jsonResponse, jsonValidator } from 'sivro';
-import type { AppEnv, UsersService } from 'sivro';
+import { auth, jsonResponse, jsonValidator } from '@sivro/core';
+import type { AppEnv, UsersService } from '@sivro/core';
 import { z } from 'zod';
 
 export const usersRouter = new Hono<AppEnv>()

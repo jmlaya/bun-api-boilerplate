@@ -1,5 +1,8 @@
 export * from './types';
 export { sivro } from './sivro';
+export { initializeDatabase } from './database';
+export { getAbsolutePath } from './helpers/getAbsolutePath';
+export { loadBaseConfig } from './helpers/loadBaseConfig';
 export { Service } from './lib/service.class';
 export { BadRequestException } from './exceptions/BadRequest';
 export { UnauthorizedException } from './exceptions/Unauthorized';

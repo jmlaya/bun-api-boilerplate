@@ -1,4 +1,5 @@
-import { Service, generateRandomText } from 'sivro';
+import { Service } from '../lib/service.class';
+import { generateRandomText } from '../helpers/generateRandomText';
 import type { AuthService } from './auth.service';
 
 export interface UserDTO {
