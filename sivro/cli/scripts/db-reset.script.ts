@@ -1,21 +1,25 @@
-import { config } from '../app/config';
-import { initializeDatabase, sql } from '../core/database';
-import { log } from '../core/log';
+import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
+import { initializeDatabase } from '../../core/database';
+import { log } from '../../core/log';
 import { dbSeed } from './db-seed.script';
 import { migrateUp } from './migrate-up.script';
 
 async function dbReset() {
-  log.INFO('Resetting database...');
-  await initializeDatabase();
+  const config = await loadBaseConfig();
+  const sql = await initializeDatabase(config.database);
+  const schema = config.database?.schema || 'public';
 
-  await sql.unsafe(`DROP SCHEMA ${config.database.schema} CASCADE;`).catch((error) => {
+  log.INFO('Resetting database...');
+
+  await sql.unsafe(`DROP SCHEMA ${schema} CASCADE;`).catch((error) => {
     log.WARN('Schema drop failed (it might not exist yet):', error.message);
   });
 
-  await sql.unsafe(`CREATE SCHEMA ${config.database.schema};`).catch((error) => {
+  await sql.unsafe(`CREATE SCHEMA ${schema};`).catch((error) => {
     log.WARN('Schema creation failed:', error);
   });
 
+  await sql.end();
   await migrateUp();
   await dbSeed();
   log.INFO('Database reset complete.');
@@ -23,5 +27,4 @@ async function dbReset() {
 
 if (import.meta.main) {
   await dbReset();
-  await sql.end();
 }

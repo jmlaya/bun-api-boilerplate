@@ -1,7 +1,6 @@
 import { parseArgs } from 'util';
-import { resolve } from 'node:path';
-import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../core/helpers/loadBaseConfig';
+import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
 
 const {
   values: { name },
@@ -17,7 +16,7 @@ const {
 });
 
 if (!name) {
-  console.error('❌ You must specify a name for the migration:');
+  console.error('You must specify a name for the migration:');
   console.log('$ bun run scripts/create-migration.ts --name <migration_name>');
   process.exit(1);
 }
@@ -48,4 +47,4 @@ await Bun.$`mkdir -p ${migrationsPath}`;
 const filePath = `${migrationsPath}/${fileName}`;
 await Bun.write(filePath, content);
 
-console.log(`✅ Nueva migración creada en: ${filePath}`);
+console.log(`Nueva migración creada en: ${filePath}`);

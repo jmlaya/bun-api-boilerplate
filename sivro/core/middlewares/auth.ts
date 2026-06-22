@@ -1,7 +1,10 @@
 import type { Next } from 'hono';
-import type { AuthService } from '../../app/services/auth.service';
 import { UnauthorizedException } from '../exceptions/Unauthorized';
-import type { AppContext } from '../types';
+import type { AppContext, TokenPayload } from '../types';
+
+type AuthService = {
+  verifyAccessToken(accessToken: string): Promise<TokenPayload>;
+};
 
 export const auth = async (c: AppContext, next: Next) => {
   const accessToken = c.req.header('Authorization')?.split(' ')?.[1];

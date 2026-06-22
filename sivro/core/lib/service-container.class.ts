@@ -1,4 +1,3 @@
-import { config } from '../../../boilerplate/app/config';
 import { log } from '../log';
 import type { Service } from './service.class';
 
@@ -9,7 +8,7 @@ export class ServicesContainer {
   register<T extends Service>(name: string, factory: (c: ServicesContainer) => T) {
     this.factories.set(name, () => factory(this));
 
-    if (config.general.debug) {
+    if (process.env.DEBUG === 'true') {
       log.DEBUG(`Service registered: ${name}`);
     }
   }

@@ -1,6 +1,5 @@
 import { compress } from 'hono/compress';
 import { logger } from 'hono/logger';
-import { initializeRouter } from '../../boilerplate/app/router';
 import { initializeDatabase } from './database';
 import { appFactory } from './helpers/appFactory';
 import { deepMerge } from './helpers/deepMerge';
@@ -36,7 +35,7 @@ export async function sivro(_options?: GeneralAppOptions) {
     ],
   });
 
-  const router = initializeRouter(app);
+  const router = options.router?.(app) || app;
 
   app.onError(errorHandler);
 

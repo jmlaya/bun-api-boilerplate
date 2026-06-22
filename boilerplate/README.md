@@ -5,7 +5,9 @@ bun install
 
 To run:
 ```sh
-bun dev
+bun run dev
 ```
 
 open http://localhost:3001
+
+Run these commands from the monorepo root.

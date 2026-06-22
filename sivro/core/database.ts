@@ -2,7 +2,7 @@ import { SQL } from 'bun';
 import { log } from './log';
 import { GeneralAppOptions } from './types';
 
-export async function initializeDatabase(options: GeneralAppOptions['database']) {
+export async function initializeDatabase(options?: GeneralAppOptions['database']) {
   try {
     const sql = new SQL(options);
 

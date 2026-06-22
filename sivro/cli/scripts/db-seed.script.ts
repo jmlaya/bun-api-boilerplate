@@ -1,12 +1,15 @@
 import { readdir } from 'node:fs/promises';
-import { resolve } from 'node:path';
 import { argv } from 'node:process';
-import { sql } from '../core/database';
-import { log } from '../core/log';
+import { initializeDatabase } from '../../core/database';
+import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
+import { log } from '../../core/log';
 
 export async function dbSeed() {
+  const config = await loadBaseConfig();
+  const sql = await initializeDatabase(config.database);
   const seedToRun = argv[2];
-  const seedsPath = resolve('database/seeds');
+  const seedsPath = getAbsolutePath(config.paths!.seeds!);
   let files = await readdir(seedsPath);
 
   files = !!seedToRun ? files.filter((f) => f.startsWith(seedToRun)) : files;
@@ -18,15 +21,17 @@ export async function dbSeed() {
       const modulo = await import(`${seedsPath}/${file}`);
       const seeder = await modulo.default(sql);
 
-      log.INFO(`✅ Seed executed: ${file}`);
+      log.INFO(`Seed executed: ${file}`);
     } catch (error) {
-      log.ERROR(`❌ Error in ${file}:`, error);
+      log.ERROR(`Error in ${file}:`, error);
+      await sql.end();
       process.exit(1);
     }
   }
+
+  await sql.end();
 }
 
 if (import.meta.main) {
   await dbSeed();
-  await sql.end();
 }

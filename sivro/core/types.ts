@@ -19,13 +19,14 @@ export type App = Hono<AppEnv>;
 export type AppContext = Context<AppEnv>;
 export type AppOptions = { servicesPath: string; corsOrigins: string; sql: SQL; middlewares?: MiddlewareHandler[] };
 export type GeneralAppOptions = {
-  general?: { corsOrigins?: string[] };
+  general?: { corsOrigins?: string[]; debug?: boolean; isProduction?: boolean };
   paths?: {
     services?: string;
     migrations?: string;
     seeds?: string;
   };
   middlewares?: MiddlewareHandler[];
+  router?: (app: App) => Hono<any>;
   database?: {
     user: string;
     password: string;

@@ -1,5 +1,4 @@
-import { generateRandomText } from '../../core';
-import { Service } from '../../core/lib/service.class';
+import { Service, generateRandomText } from 'sivro';
 import type { AuthService } from './auth.service';
 
 interface UserDTO {

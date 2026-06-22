@@ -1,11 +1,11 @@
-import { initializeDatabase } from '../core/database';
-import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../core/helpers/loadBaseConfig';
-import { log } from '../core/log';
+import { initializeDatabase } from '../../core/database';
+import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
+import { log } from '../../core/log';
 
 export async function migrateDown() {
   const config = await loadBaseConfig();
-  const sql = await initializeDatabase();
+  const sql = await initializeDatabase(config.database);
 
   await sql`
     CREATE TABLE IF NOT EXISTS _migrations (
@@ -22,6 +22,7 @@ export async function migrateDown() {
 
   if (!last) {
     log.INFO('No migrations to revert');
+    await sql.end();
     return;
   }
 
@@ -37,10 +38,11 @@ export async function migrateDown() {
       await tx`DELETE FROM _migrations WHERE name = ${last}`;
     });
 
-    log.INFO(`⏪ Reverted: ${last}`);
+    log.INFO(`Reverted: ${last}`);
     await sql.end();
   } catch (error) {
-    log.ERROR(`❌ Error reverting ${last}:`, error);
+    log.ERROR(`Error reverting ${last}:`, error);
+    await sql.end();
     process.exit(1);
   }
 }

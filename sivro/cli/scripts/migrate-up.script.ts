@@ -1,12 +1,11 @@
-import { resolve } from 'node:path';
-import { initializeDatabase } from '../core/database';
-import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../core/helpers/loadBaseConfig';
-import { log } from '../core/log';
+import { initializeDatabase } from '../../core/database';
+import { getAbsolutePath } from '../../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../../core/helpers/loadBaseConfig';
+import { log } from '../../core/log';
 
 export async function migrateUp() {
   const config = await loadBaseConfig();
-  const sql = await initializeDatabase();
+  const sql = await initializeDatabase(config.database);
 
   await sql`
     CREATE TABLE IF NOT EXISTS _migrations (
@@ -46,13 +45,15 @@ export async function migrateUp() {
         await tx`INSERT INTO _migrations ${tx({ name: migration })}`;
       });
 
-      log.INFO(`✅ Applied: ${migration}`);
-      await sql.end();
+      log.INFO(`Applied: ${migration}`);
     } catch (error) {
-      log.ERROR(`❌ Error in ${migration}:`, error);
+      log.ERROR(`Error in ${migration}:`, error);
+      await sql.end();
       process.exit(1);
     }
   }
+
+  await sql.end();
 }
 
 if (import.meta.main) {

@@ -1,0 +1,16 @@
+{
+  "name": "bun-api-boilerplate-monorepo",
+  "private": true,
+  "workspaces": [
+    "boilerplate",
+    "sivro"
+  ],
+  "scripts": {
+    "dev": "bun --cwd boilerplate run dev",
+    "db:reset": "bun --cwd boilerplate run db:reset",
+    "db:seed": "bun --cwd boilerplate run db:seed",
+    "migrations:up": "bun --cwd boilerplate run migrations:up",
+    "migrations:down": "bun --cwd boilerplate run migrations:down",
+    "migrations:create": "bun --cwd boilerplate run migrations:create"
+  }
+}

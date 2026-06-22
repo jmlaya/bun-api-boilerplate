@@ -1,5 +1,3 @@
-import { config as sysConfig } from '../../boilerplate/app/config';
-
 type LogLevel = 'INFO' | 'DEBUG' | 'WARN' | 'ERROR';
 
 interface LoggerConfig {
@@ -33,7 +31,7 @@ const LEVEL_COLORS: Record<LogLevel, string> = {
 };
 
 const DEFAULT_CONFIG: LoggerConfig = {
-  colorsEnabled: !sysConfig.general.isProduction, // Enable colors in non-production environments
+  colorsEnabled: process.env.NODE_ENV !== 'production',
 };
 
 let config: LoggerConfig = { ...DEFAULT_CONFIG };
@@ -79,7 +77,7 @@ const createLogMessage = (level: LogLevel, message: string, data?: unknown): str
 };
 
 const writeLog = (level: LogLevel, message: string, data?: unknown): void => {
-  if (level === 'DEBUG' && !sysConfig.general.debug) return;
+  if (level === 'DEBUG' && process.env.DEBUG !== 'true') return;
   const output = createLogMessage(level, message, data);
   level === 'ERROR' ? console.log(output) : console.log(output);
 };
