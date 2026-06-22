@@ -1,9 +1,9 @@
+import { SQL } from 'bun';
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { sql } from './database';
 import { ServicesContainer } from './lib/service-container.class';
 
-export async function initializeAndGetServicesContainer(servicesPath: string) {
+export async function initializeAndGetServicesContainer(servicesPath: string, sql: SQL) {
   const container = new ServicesContainer();
   const resolvedServicesPath = resolve(servicesPath);
   const files = await readdir(resolvedServicesPath);

@@ -1,6 +1,6 @@
 {
-  "database": {
-    "migrationsPath": "database/migrations",
-    "seedPath": "database/seeds"
+  "paths": {
+    "migrations": "database/migrations",
+    "seeds": "database/seeds"
   }
 }

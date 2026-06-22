@@ -1,3 +1,4 @@
+import { SQL } from 'bun';
 import { Context, Hono, MiddlewareHandler } from 'hono';
 import type { JwtVariables } from 'hono/jwt';
 import type { JWTPayload } from 'hono/utils/jwt/types';
@@ -16,8 +17,28 @@ export type AppEnv = {
 };
 export type App = Hono<AppEnv>;
 export type AppContext = Context<AppEnv>;
-export type AppOptions = ServerOptions & { middlewares?: MiddlewareHandler[] };
-export type ServerOptions = {
-  configPath?: string;
-  servicesPath?: string;
+export type AppOptions = { servicesPath: string; corsOrigins: string; sql: SQL; middlewares?: MiddlewareHandler[] };
+export type GeneralAppOptions = {
+  general?: { corsOrigins?: string[] };
+  paths?: {
+    services?: string;
+    migrations?: string;
+    seeds?: string;
+  };
+  middlewares?: MiddlewareHandler[];
+  database?: {
+    user: string;
+    password: string;
+    host: string;
+    database: string;
+    schema?: string;
+    port: number;
+    ssl?: boolean | { rejectUnauthorized: boolean };
+    pool?: {
+      max?: number;
+      maxLifetime?: number;
+      idleTimeout?: number;
+      connectionTimeout?: number;
+    };
+  };
 };

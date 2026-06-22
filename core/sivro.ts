@@ -3,19 +3,28 @@ import { logger } from 'hono/logger';
 import { initializeRouter } from '../app/router';
 import { initializeDatabase } from './database';
 import { appFactory } from './helpers/appFactory';
+import { deepMerge } from './helpers/deepMerge';
 import { errorHandler } from './helpers/errorHandler';
+import { getAbsolutePath } from './helpers/getAbsolutePath';
+import { loadBaseConfig } from './helpers/loadConfig';
 import { log } from './log';
 import { keepAlive } from './middlewares/keepAlive';
-import { ServerOptions } from './types';
+import { GeneralAppOptions } from './types';
 
-export async function sivro(options?: ServerOptions) {
+const baseConfig = await loadBaseConfig();
+
+export async function sivro(_options?: GeneralAppOptions) {
   // Initialize the database connection
-  await initializeDatabase();
+  const sql = await initializeDatabase();
+  const options = deepMerge(baseConfig, _options || {});
 
   const app = await appFactory({
-    servicesPath: options?.servicesPath,
-    configPath: options?.configPath,
+    servicesPath: getAbsolutePath(options?.paths?.services!),
+    corsOrigins: options?.general?.corsOrigins?.join(',') || '*',
+    sql,
     middlewares: [
+      ...(_options?.middlewares || []),
+
       // Enable keep alive to improve performance and reduce latency
       keepAlive(),
 

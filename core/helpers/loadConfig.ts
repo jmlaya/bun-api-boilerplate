@@ -1,15 +1,32 @@
-export async function loadConfig() {
-  let config: { database?: { migrationsPath?: string } } = {};
+import { log } from '../log';
+import { GeneralAppOptions } from '../types';
+import { deepMerge } from './deepMerge';
 
-  try {
-    config = JSON.parse(await Bun.file('sivro.json').text());
+export const defaultOptions: GeneralAppOptions = {
+  general: {
+    corsOrigins: ['*'],
+  },
+  paths: {
+    services: '/app/services',
+    migrations: '/database/migrations',
+    seeds: '/database/seeds',
+  },
+};
 
-    if (!config.database?.migrationsPath) {
-      throw new Error('Migrations path not defined in sivro.json');
+export async function loadBaseConfig() {
+  let config: GeneralAppOptions = {};
+  const path = 'sivro.json';
+
+  if (await Bun.file(path).exists()) {
+    try {
+      config = JSON.parse(await Bun.file(path).text());
+    } catch (error) {
+      log.ERROR('Error loading sivro.json:', error);
+      process.exit(1);
     }
-  } catch (error) {
-    console.error('Error loading sivro.json:', error);
-    process.exit(1);
+
+    return deepMerge(defaultOptions, config);
   }
-  return config;
+
+  return defaultOptions;
 }

@@ -1,6 +1,7 @@
 import { parseArgs } from 'util';
 import { resolve } from 'node:path';
-import { loadConfig } from '../core/helpers/loadConfig';
+import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../core/helpers/loadConfig';
 
 const {
   values: { name },
@@ -40,8 +41,8 @@ const content = `-- up
 -- DROP TABLE... ALTER TABLE... etc
 `;
 
-const config = await loadConfig();
-const migrationsPath = resolve(process.cwd(), config.database!.migrationsPath!);
+const config = await loadBaseConfig();
+const migrationsPath = getAbsolutePath(config.paths!.migrations!);
 await Bun.$`mkdir -p ${migrationsPath}`;
 
 const filePath = `${migrationsPath}/${fileName}`;

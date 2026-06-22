@@ -1,11 +1,12 @@
-import { initializeDatabase, sql } from '../core/database';
-import { loadConfig } from '../core/helpers/loadConfig';
-import { log } from '../core/log';
 import { resolve } from 'node:path';
+import { initializeDatabase } from '../core/database';
+import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
+import { loadBaseConfig } from '../core/helpers/loadConfig';
+import { log } from '../core/log';
 
 export async function migrateUp() {
-  const config = await loadConfig();
-  await initializeDatabase();
+  const config = await loadBaseConfig();
+  const sql = await initializeDatabase();
 
   await sql`
     CREATE TABLE IF NOT EXISTS _migrations (
@@ -15,7 +16,7 @@ export async function migrateUp() {
   `;
 
   const glob = new Bun.Glob('*.sql');
-  const migrationsPath = resolve(process.cwd(), config.database!.migrationsPath!);
+  const migrationsPath = getAbsolutePath(config.paths!.migrations!);
   await Bun.$`mkdir -p ${migrationsPath}`;
 
   const executed = await sql<{ name: string }[]>`
@@ -46,6 +47,7 @@ export async function migrateUp() {
       });
 
       log.INFO(`✅ Applied: ${migration}`);
+      await sql.end();
     } catch (error) {
       log.ERROR(`❌ Error in ${migration}:`, error);
       process.exit(1);
@@ -55,5 +57,4 @@ export async function migrateUp() {
 
 if (import.meta.main) {
   await migrateUp();
-  await sql.end();
 }

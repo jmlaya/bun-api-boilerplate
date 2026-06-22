@@ -3,12 +3,11 @@ import { createFactory } from 'hono/factory';
 import { initializeAndGetServicesContainer } from '../services';
 import { AppEnv, AppOptions } from '../types';
 
-export const appFactory = async (options?: AppOptions) => {
-  const { middlewares, servicesPath } = options || {};
-  const config = require(options?.configPath || '../../app/config');
+export const appFactory = async (options: AppOptions) => {
+  const { middlewares, servicesPath, corsOrigins, sql } = options || {};
 
   // Setup application services
-  const servicesContainer = await initializeAndGetServicesContainer(servicesPath || '../../app/services');
+  const servicesContainer = await initializeAndGetServicesContainer(servicesPath, sql);
 
   return createFactory<AppEnv>({
     initApp: (app) => {
@@ -18,15 +17,17 @@ export const appFactory = async (options?: AppOptions) => {
       });
 
       // Enable CORS for all origins
-      app.use(
-        '*',
-        cors({
-          origin: config.general.corsOrigins,
-          allowMethods: ['POST'],
-          allowHeaders: ['Content-Type'],
-          credentials: true,
-        }),
-      );
+      if (corsOrigins) {
+        app.use(
+          '*',
+          cors({
+            origin: corsOrigins,
+            allowMethods: ['POST'],
+            allowHeaders: ['Content-Type'],
+            credentials: true,
+          }),
+        );
+      }
 
       if (middlewares && middlewares.length) {
         app.use(...middlewares);
