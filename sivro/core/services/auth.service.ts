@@ -1,11 +1,12 @@
 import { sign, verify } from 'hono/jwt';
 import type { JWTPayload } from 'hono/utils/jwt/types';
-import { Service, log, timeToSeconds } from 'sivro';
-import type { TokenPayload } from 'sivro';
-import { config } from '../config';
+import { timeToSeconds } from '../helpers/timeToSeconds';
+import { InternalService } from '../lib/internal-service.class';
+import { log } from '../log';
+import type { TokenPayload } from '../types';
 import type { UsersService } from './users.service';
 
-export class AuthService extends Service {
+export class AuthService extends InternalService {
   private async generateTokens(props: { id: string; username: string; email: string }): Promise<{
     accessToken: string;
     refreshToken: string;
@@ -15,16 +16,16 @@ export class AuthService extends Service {
       email: props.email,
       iat: Math.floor(Date.now() / 1000), // Creation date (seconds)
       nbf: Math.floor(Date.now() / 1000), // Valid since (now)
-      exp: Math.floor(Date.now() / 1000) + timeToSeconds(config.auth.accessTokenExpires),
+      exp: Math.floor(Date.now() / 1000) + timeToSeconds(this.config.auth?.accessTokenExpires!),
     };
 
-    const accessToken = await sign(payload, config.auth.jwtSecret);
+    const accessToken = await sign(payload, this.config.auth?.jwtSecret!);
     const refreshToken = await sign(
       {
         ...payload,
-        exp: Math.floor(Date.now() / 1000) + timeToSeconds(config.auth.refreshTokenExpires),
+        exp: Math.floor(Date.now() / 1000) + timeToSeconds(this.config.auth?.refreshTokenExpires!),
       },
-      config.auth.jwtRefreshSecret,
+      this.config.auth?.jwtRefreshSecret!,
     );
 
     return { accessToken, refreshToken };
@@ -71,7 +72,7 @@ export class AuthService extends Service {
   }
 
   async refreshToken(refreshToken: string) {
-    const decoded = (await verify(refreshToken, config.auth.jwtRefreshSecret)) as TokenPayload;
+    const decoded = (await verify(refreshToken, this.config.auth?.jwtRefreshSecret!)) as TokenPayload;
 
     const [user] = await this.services.get<UsersService>('UsersService').getUserById(decoded.userId);
 
@@ -120,7 +121,7 @@ export class AuthService extends Service {
 
   async verifyAccessToken(token: string) {
     try {
-      return (await verify(token, config.auth.jwtSecret)) as unknown as TokenPayload;
+      return (await verify(token, this.config.auth?.jwtSecret!)) as unknown as TokenPayload;
     } catch (error) {
       log.ERROR('Invalid or expired token', error);
       throw new Error('Invalid or expired token');

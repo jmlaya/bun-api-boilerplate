@@ -8,6 +8,7 @@ import { getAbsolutePath } from './helpers/getAbsolutePath';
 import { loadBaseConfig } from './helpers/loadBaseConfig';
 import { log } from './log';
 import { keepAlive } from './middlewares/keepAlive';
+import { authRouter } from './routes/auth.route';
 import { GeneralAppOptions } from './types';
 
 const baseConfig = await loadBaseConfig();
@@ -20,6 +21,7 @@ export async function sivro(_options?: GeneralAppOptions) {
   const app = await appFactory({
     servicesPath: getAbsolutePath(options?.paths?.services!),
     corsOrigins: options?.general?.corsOrigins?.join(',') || '*',
+    generalOptions: options,
     sql,
     middlewares: [
       ...(_options?.middlewares || []),
@@ -36,6 +38,8 @@ export async function sivro(_options?: GeneralAppOptions) {
   });
 
   const router = options.router?.(app) || app;
+
+  router.route('/', authRouter);
 
   app.onError(errorHandler);
 

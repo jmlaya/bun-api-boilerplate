@@ -1,8 +1,12 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
-import { BadRequestException, UnauthorizedException, jsonResponse, jsonValidator, log } from 'sivro';
-import type { AppEnv } from 'sivro';
+import { BadRequestException } from '../exceptions/BadRequest';
+import { UnauthorizedException } from '../exceptions/Unauthorized';
+import { jsonResponse } from '../helpers/jsonResponse';
+import { log } from '../log';
+import { jsonValidator } from '../middlewares/jsonValidator';
 import type { AuthService } from '../services/auth.service';
+import type { AppEnv } from '../types';
 
 export const authRouter = new Hono<AppEnv>()
   .basePath('/auth')
@@ -58,7 +62,7 @@ export const authRouter = new Hono<AppEnv>()
     async (c) => {
       try {
         const { email } = await c.req.valid('json');
-        const result = await await c.var.services.get<AuthService>('AuthService').forgotPassword(email);
+        const result = await c.var.services.get<AuthService>('AuthService').forgotPassword(email);
 
         return jsonResponse(c, result);
       } catch (error) {
@@ -78,7 +82,7 @@ export const authRouter = new Hono<AppEnv>()
     ),
     async (c) => {
       try {
-        const { token, newPassword } = await c.req.json();
+        const { token, newPassword } = await c.req.valid('json');
         const result = await c.var.services.get<AuthService>('AuthService').resetPassword(token, newPassword);
 
         return jsonResponse(c, result);

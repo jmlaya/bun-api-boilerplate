@@ -17,13 +17,25 @@ export type AppEnv = {
 };
 export type App = Hono<AppEnv>;
 export type AppContext = Context<AppEnv>;
-export type AppOptions = { servicesPath: string; corsOrigins: string; sql: SQL; middlewares?: MiddlewareHandler[] };
+export type AppOptions = {
+  servicesPath: string;
+  corsOrigins: string;
+  sql: SQL;
+  middlewares?: MiddlewareHandler[];
+  generalOptions?: GeneralAppOptions;
+};
 export type GeneralAppOptions = {
   general?: { corsOrigins?: string[]; debug?: boolean; isProduction?: boolean };
   paths?: {
     services?: string;
     migrations?: string;
     seeds?: string;
+  };
+  auth?: {
+    jwtSecret: string;
+    jwtRefreshSecret: string;
+    accessTokenExpires: string;
+    refreshTokenExpires: string;
   };
   middlewares?: MiddlewareHandler[];
   router?: (app: App) => Hono<any>;

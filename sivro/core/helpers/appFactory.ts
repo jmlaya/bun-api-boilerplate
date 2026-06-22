@@ -4,10 +4,10 @@ import { AppEnv, AppOptions } from '../types';
 import { initializeAndGetServicesContainer } from './initializeAndGetServicesContainer';
 
 export const appFactory = async (options: AppOptions) => {
-  const { middlewares, servicesPath, corsOrigins, sql } = options || {};
+  const { middlewares, servicesPath, corsOrigins, sql, generalOptions } = options || {};
 
   // Setup application services
-  const servicesContainer = await initializeAndGetServicesContainer(servicesPath, sql);
+  const servicesContainer = await initializeAndGetServicesContainer(servicesPath, sql, generalOptions || {});
 
   return createFactory<AppEnv>({
     initApp: (app) => {

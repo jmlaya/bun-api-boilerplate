@@ -1,8 +1,7 @@
 import { Hono } from 'hono';
-import { z } from 'zod';
 import { auth, jsonResponse, jsonValidator } from 'sivro';
-import type { AppEnv } from 'sivro';
-import type { UsersService } from '../services/users.service';
+import type { AppEnv, UsersService } from 'sivro';
+import { z } from 'zod';
 
 export const usersRouter = new Hono<AppEnv>()
   .basePath('/users')

@@ -10,3 +10,5 @@ export { jsonValidator } from './middlewares/jsonValidator';
 export { generateRandomText } from './helpers/generateRandomText';
 export { deepMerge } from './helpers/deepMerge';
 export { auth } from './middlewares/auth';
+export * from './services/auth.service';
+export * from './services/users.service';
