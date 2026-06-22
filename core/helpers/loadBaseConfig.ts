@@ -7,9 +7,9 @@ export const defaultOptions: GeneralAppOptions = {
     corsOrigins: ['*'],
   },
   paths: {
-    services: '/app/services',
-    migrations: '/database/migrations',
-    seeds: '/database/seeds',
+    services: 'app/services',
+    migrations: 'database/migrations',
+    seeds: 'database/seeds',
   },
 };
 

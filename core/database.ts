@@ -1,10 +1,10 @@
 import { SQL } from 'bun';
-import { config } from '../app/config';
 import { log } from './log';
+import { GeneralAppOptions } from './types';
 
-export async function initializeDatabase() {
+export async function initializeDatabase(options: GeneralAppOptions['database']) {
   try {
-    const sql = new SQL(config.database);
+    const sql = new SQL(options);
 
     await sql.connect();
 

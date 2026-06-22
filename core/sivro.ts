@@ -15,8 +15,8 @@ const baseConfig = await loadBaseConfig();
 
 export async function sivro(_options?: GeneralAppOptions) {
   // Initialize the database connection
-  const sql = await initializeDatabase();
   const options = deepMerge(baseConfig, _options || {});
+  const sql = await initializeDatabase(options.database!);
 
   const app = await appFactory({
     servicesPath: getAbsolutePath(options?.paths?.services!),
