@@ -1,4 +1,4 @@
-import { config } from '../../app/config';
+import { config } from '../../../boilerplate/app/config';
 import { log } from '../log';
 import type { Service } from './service.class';
 

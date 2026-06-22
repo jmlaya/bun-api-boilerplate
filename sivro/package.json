@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "scripts": {
+    "dev": "bun run --hot app/server.ts",
+    "db:reset": "bun scripts/db-reset.script.ts",
+    "db:seed": "bun scripts/db-seed.script.ts",
+    "migrations:up": "bun scripts/migrate-up.script.ts",
+    "migrations:down": "bun scripts/migrate-down.script.ts",
+    "migrations:create": "bun scripts/migrate-create.script.ts"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.4",
+    "hono": "^4.10.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "imports": {
+    "#config/*": "./app/config/*.ts"
+  }
+}

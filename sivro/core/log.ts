@@ -1,4 +1,4 @@
-import { config as sysConfig } from '../app/config';
+import { config as sysConfig } from '../../boilerplate/app/config';
 
 type LogLevel = 'INFO' | 'DEBUG' | 'WARN' | 'ERROR';
 

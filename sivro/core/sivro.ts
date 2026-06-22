@@ -1,6 +1,6 @@
 import { compress } from 'hono/compress';
 import { logger } from 'hono/logger';
-import { initializeRouter } from '../app/router';
+import { initializeRouter } from '../../boilerplate/app/router';
 import { initializeDatabase } from './database';
 import { appFactory } from './helpers/appFactory';
 import { deepMerge } from './helpers/deepMerge';
