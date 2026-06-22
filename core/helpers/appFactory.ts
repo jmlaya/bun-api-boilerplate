@@ -1,7 +1,7 @@
 import { cors } from 'hono/cors';
 import { createFactory } from 'hono/factory';
-import { initializeAndGetServicesContainer } from '../services';
 import { AppEnv, AppOptions } from '../types';
+import { initializeAndGetServicesContainer } from './initializeAndGetServicesContainer';
 
 export const appFactory = async (options: AppOptions) => {
   const { middlewares, servicesPath, corsOrigins, sql } = options || {};
@@ -22,7 +22,7 @@ export const appFactory = async (options: AppOptions) => {
           '*',
           cors({
             origin: corsOrigins,
-            allowMethods: ['POST'],
+            allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
             allowHeaders: ['Content-Type'],
             credentials: true,
           }),
