@@ -1,11 +1,11 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
-import type { AppEnv } from '../../core/bootstrap';
 import { BadRequestException } from '../../core/exceptions/BadRequest';
 import { UnauthorizedException } from '../../core/exceptions/Unauthorized';
 import { jsonResponse } from '../../core/helpers/jsonResponse';
 import { log } from '../../core/log';
 import { jsonValidator } from '../../core/middlewares/jsonValidator';
+import type { AppEnv } from '../../core/types';
 import type { AuthService } from '../services/auth.service';
 
 export const authRouter = new Hono<AppEnv>()

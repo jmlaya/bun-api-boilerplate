@@ -1,9 +1,9 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
-import type { AppEnv } from '../../core/bootstrap';
 import { jsonResponse } from '../../core/helpers/jsonResponse';
 import { auth } from '../../core/middlewares/auth';
 import { jsonValidator } from '../../core/middlewares/jsonValidator';
+import type { AppEnv } from '../../core/types';
 import type { UsersService } from '../services/users.service';
 
 export const usersRouter = new Hono<AppEnv>()
@@ -19,7 +19,7 @@ export const usersRouter = new Hono<AppEnv>()
       { id: 3, name: 'Charlie' },
     ]);
 
-    return jsonResponse(c, await c.var.services.get<UsersService>('UsersService').getUsers());
+    // return jsonResponse(c, await c.var.services.get<UsersService>('UsersService').getUsers());
   })
 
   .use(auth)

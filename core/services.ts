@@ -3,13 +3,13 @@ import { resolve } from 'node:path';
 import { sql } from './database';
 import { ServicesContainer } from './lib/service-container.class';
 
-export async function initializeAndGetServicesContainer() {
+export async function initializeAndGetServicesContainer(servicesPath: string) {
   const container = new ServicesContainer();
-  const servicesPath = resolve('app/services');
-  const files = await readdir(servicesPath);
+  const resolvedServicesPath = resolve(servicesPath);
+  const files = await readdir(resolvedServicesPath);
 
   for (const element of files) {
-    const modulo = await import(`${servicesPath}/${element}`);
+    const modulo = await import(`${resolvedServicesPath}/${element}`);
     const serviceName = Object.keys(modulo)[0];
     container.register(serviceName, (c) => new modulo[serviceName](sql, c));
   }

@@ -1,10 +1,9 @@
 import type { Next } from 'hono';
-import type { Context } from 'hono';
 import type { AuthService } from '../../app/services/auth.service';
-import type { AppEnv } from '../bootstrap';
 import { UnauthorizedException } from '../exceptions/Unauthorized';
+import type { AppContext } from '../types';
 
-export const auth = async (c: Context<AppEnv>, next: Next) => {
+export const auth = async (c: AppContext, next: Next) => {
   const accessToken = c.req.header('Authorization')?.split(' ')?.[1];
 
   if (!accessToken) {
@@ -17,7 +16,7 @@ export const auth = async (c: Context<AppEnv>, next: Next) => {
       .get<AuthService>('AuthService')
       .verifyAccessToken(accessToken);
 
-    c.set('sesion', session);
+    c.set('session', session);
 
     await next();
   } catch (error) {
