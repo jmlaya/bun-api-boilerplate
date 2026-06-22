@@ -6,7 +6,7 @@ import { appFactory } from './helpers/appFactory';
 import { deepMerge } from './helpers/deepMerge';
 import { errorHandler } from './helpers/errorHandler';
 import { getAbsolutePath } from './helpers/getAbsolutePath';
-import { loadBaseConfig } from './helpers/loadConfig';
+import { loadBaseConfig } from './helpers/loadBaseConfig';
 import { log } from './log';
 import { keepAlive } from './middlewares/keepAlive';
 import { GeneralAppOptions } from './types';

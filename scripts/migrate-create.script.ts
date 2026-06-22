@@ -1,7 +1,7 @@
 import { parseArgs } from 'util';
 import { resolve } from 'node:path';
 import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../core/helpers/loadConfig';
+import { loadBaseConfig } from '../core/helpers/loadBaseConfig';
 
 const {
   values: { name },

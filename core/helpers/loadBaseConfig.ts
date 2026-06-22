@@ -13,13 +13,29 @@ export const defaultOptions: GeneralAppOptions = {
   },
 };
 
+function interpolateEnvValues(value: unknown): unknown {
+  if (typeof value === 'string') {
+    return value.replace(/\$\{env\.([A-Za-z_][A-Za-z0-9_]*)\}/g, (_, name: string) => process.env[name] ?? '');
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => interpolateEnvValues(item));
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, interpolateEnvValues(item)]));
+  }
+
+  return value;
+}
+
 export async function loadBaseConfig() {
   let config: GeneralAppOptions = {};
   const path = 'sivro.json';
 
   if (await Bun.file(path).exists()) {
     try {
-      config = JSON.parse(await Bun.file(path).text());
+      config = interpolateEnvValues(JSON.parse(await Bun.file(path).text())) as GeneralAppOptions;
     } catch (error) {
       log.ERROR('Error loading sivro.json:', error);
       process.exit(1);

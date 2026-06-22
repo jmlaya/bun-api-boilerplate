@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import { initializeDatabase } from '../core/database';
 import { getAbsolutePath } from '../core/helpers/getAbsolutePath';
-import { loadBaseConfig } from '../core/helpers/loadConfig';
+import { loadBaseConfig } from '../core/helpers/loadBaseConfig';
 import { log } from '../core/log';
 
 export async function migrateUp() {
